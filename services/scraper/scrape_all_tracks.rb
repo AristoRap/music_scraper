@@ -19,7 +19,7 @@ class ScrapeAllTracks
       title = doc.search(".buk-track-title")[index + 1].text.split
       title = format_title(title)
       # Get artist
-      artist = doc.search(".buk-track-artists")[index + 1].text.strip
+      artist = doc.search(".buk-track-artists")[index + 1].text.strip.split.join(' ')
       # Get remixers
       remixer = doc.search(".buk-track-remixers")[index + 1].text.strip
       # Get track label
@@ -29,7 +29,7 @@ class ScrapeAllTracks
       # Get track release date
       release_date = doc.search(".buk-track-released")[index + 1].text.strip
       # Get track price
-      price = doc.search(".track .buy-button")[index + 1].text.strip.slice(1..)
+      price = doc.search(".track .buy-button")[index + 1].text.strip.delete('€')
 
       tracks[title] = {
         artist: artist,
@@ -47,8 +47,8 @@ class ScrapeAllTracks
   private
 
   def format_title(title_array)
-      title_array[-2].prepend('(')
-      title_array[-1] << ')'
-      title_array.join(' ')
+    title_array[-2].prepend('(')
+    title_array[-1] << ')'
+    title_array.join(' ')
   end
 end
